@@ -8,9 +8,11 @@
     <div id="page">
       <%-include('header-menu')-%> 
       <!--Resolvendo problema: isHome undefinied para as paginas contacts,
-      menu, services... a variavel só existe na rota index 
-      pegando o typeof de isHome ele vem como undefined das outras rotas já que 
-    essa var nao foi definida delas então nao entra nesse if-->
+menu, services... a variavel só existe na rota index, não existe no render das outras paginas!
+        Pegando o typeof de isHome ele vem como undefined das outras rotas já que 
+    essa var nao foi definida nelas então nao entra nesse if
+        Se ifHome vem definido vamos pro segundo passo se ela vem como true caimos no if e add o include
+  -->
       <% if(typeof isHome === 'boolean' && isHome){%>
       <%-include('header-index')-%> 
       <%} else {%>
