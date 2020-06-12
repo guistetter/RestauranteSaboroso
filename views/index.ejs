@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <%-include("include/head")-%>
+<%-include('include/page-header')-%>
+<%-include('include/content/menus')-%>
 
-  <body>
-    <div class="gtco-loader"></div>
+<%-include('include/content/services')-%>
 
-    <div id="page">
-      <%-include('include/header-menu')-%> <%-include('include/header-index')-%>
-      <%-include('include/content/menus')-%>
-      <%-include('include/content/services')-%>
-      <%-include('include/content/text')-%>
-      <%-include('include/content/facts')-%>
-      <%-include('include/content/subscribe')-%> <%-include('include/footer')-%>
-    </div>
+<%-include('include/content/text')-%>
 
-    <%-include('include/footer-gototop')-%>
-    <%-include('include/footer-scripts')-%>
-  </body>
-</html>
+<%-include('include/content/facts')-%>
+
+<%-include('include/content/subscribe')-%>
+<%-include('include/page-footer')-%>

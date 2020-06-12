@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <%-include("head")-%>
+
+  <body>
+    <div class="gtco-loader"></div>
+
+    <div id="page">
+      <%-include('header-menu')-%> 
+      <!--Resolvendo problema: isHome undefinied para as paginas contacts,
+      menu, services... a variavel só existe na rota index 
+      pegando o typeof de isHome ele vem como undefined das outras rotas já que 
+    essa var nao foi definida delas então nao entra nesse if-->
+      <% if(typeof isHome === 'boolean' && isHome){%>
+      <%-include('header-index')-%> 
+      <%} else {%>
+      <%-include('header')-%> 
+      <%}%>
+  
