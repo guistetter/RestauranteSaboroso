@@ -2,6 +2,20 @@ var express = require("express");
 var users = require("./../includes/users");
 var router = express.Router();
 
+//controlando area restrita do site
+router.use(function (req, res, next) {
+  if (["/login"].indexOf(req.url) === -1 && !req.session.user) {
+    res.redirect("/admin/login");
+  } else {
+    next();
+  }
+  //console.log("middleware: ", req.url);
+});
+router.get("/logout", function (req, res, next) {
+  delete req.session.user;
+  res.redirect("/admin/login");
+});
+
 router.get("/", function (req, res, next) {
   res.render("admin/index");
 });
