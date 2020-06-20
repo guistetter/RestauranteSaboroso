@@ -1,6 +1,7 @@
 var express = require("express");
 var users = require("./../includes/users");
 var admin = require("./../includes/admin");
+var menus = require("./../includes/menus")
 var router = express.Router();
 
 //controlando area restrita do site
@@ -68,7 +69,12 @@ router.get("/emails", function (req, res, next) {
 });
 
 router.get("/menus", function (req, res, next) {
-  res.render("admin/menus", admin.getParams(req));
+  menus.getMenus().then(data => {
+    res.render("admin/menus", admin.getParams(req,{
+      data
+    }));
+  })
+  
 });
 
 router.get("/reservations", function (req, res, next) {

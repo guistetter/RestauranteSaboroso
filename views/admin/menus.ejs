@@ -42,14 +42,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1.</td>
+            <% data.forEach(function(row){ %>
+            <tr data-row= "<%= JSON.stringify(row); %>">
+              <td><%= row.id %></td>
               <td>
-                <img src="dist/img/boxed-bg.jpg" alt="" style="height: 18px;" />
+                <img src="/<%= row.photo %>" alt="" style="height: 18px;" />
               </td>
-              <td>Update software</td>
-              <td>Diuretics paradis num copo é motivis de denguis.</td>
-              <td>R$1,99</td>
+              <td><%= row.title %></td>
+              <td><%= row.description %></td>
+              <td><%= row.price %></td>
               <td>
                 <button
                   type="button"
@@ -66,6 +67,7 @@
                 </button>
               </td>
             </tr>
+            <% }); %>
           </tbody>
         </table>
       </div>
