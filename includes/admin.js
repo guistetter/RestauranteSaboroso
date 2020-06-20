@@ -1,4 +1,14 @@
 module.exports = {
+  getParams(req, params) {
+    return Object.assign(
+      {},
+      {
+        menus: req.menus,
+        user: req.session.user,
+      },
+      params
+    );
+  },
   getMenus(req) {
     let menus = [
       {
@@ -39,10 +49,10 @@ module.exports = {
       },
     ];
 
-    menus.map(menu => {
-      if(menu.href === `/admin${req.url}`) menu.active = true;
-      console.log(req.url, menu.href)
-    })
+    menus.map((menu) => {
+      if (menu.href === `/admin${req.url}`) menu.active = true;
+      console.log(req.url, menu.href);
+    });
 
     return menus;
   },

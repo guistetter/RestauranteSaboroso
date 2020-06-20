@@ -63,7 +63,7 @@
                     alt="User Image"
                   />
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                  <span class="hidden-xs">Fulano Junior</span>
+                  <span class="hidden-xs"><%= user.name%></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- The user image in the menu -->
@@ -75,8 +75,8 @@
                     />
 
                     <p>
-                      Fulano Junior
-                      <small>fulano@hcode.com.br</small>
+                      <%= user.name%>
+                      <small><%= user.email%></small>
                     </p>
                   </li>
                   <!-- Menu Footer-->
@@ -110,7 +110,7 @@
               />
             </div>
             <div class="pull-left info">
-              <p>Fulano Junior</p>
+              <p><%= user.name%></p>
               <!-- Status -->
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -134,4 +134,4 @@
         </section>
         <!-- /.sidebar -->
       </aside>
-    
+   
