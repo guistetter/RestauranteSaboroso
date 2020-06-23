@@ -227,3 +227,21 @@
 
 <!-- Main Footer -->
 <%- include('include/footer') -%>
+<script>
+  let formCreate = document.querySelector("#modal-create form")
+  
+  formCreate.addEventListener('submit', e =>{
+    e.preventDefault();
+    let fomCreateData = new FormData(formCreate)//formulario criado como objeto
+    fetch("/admin/menus",{
+      method: "POST",
+      body: fomCreateData
+    }).then(response => response.json())
+    .then(json => {
+      console.log("json", json)
+      console.log(fomCreateData)
+    })
+  })
+ 
+
+</script>
