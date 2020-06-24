@@ -55,8 +55,6 @@
                 <button
                   type="button"
                   class="btn btn-xs btn-info btn-update"
-                  data-toggle="modal"
-                  data-target="#modal-update"
                 >
                   <i class="fa fa-pencil"></i> Editar</button
                 >&nbsp;<button
@@ -240,9 +238,40 @@
     .then(json => {
       console.log("json", json)
       console.log(fomCreateData)
-      window.location.reload()
-    })
-  })
- 
+      window.location.reload();
+    });
+  });
 
+  //evitando comportamento do modal no menu para editar o cardapio, para editar o modal tem q 
+  //abrir e exibir os dados do usuario, para isto:
+  
+  let formUpdate = document.querySelector("#modal-update form");
+  //convertendo em array
+  [...document.querySelectorAll(".btn-update")].forEach(btn => {
+    btn.addEventListener("click", e => {
+        let tr = e.path.find(el => {
+          return (el.tagName.toUpperCase() === "TR");
+        })
+        let data = JSON.parse(tr.dataset.row)
+        console.log(data);
+        for (let name in data){
+          switch(name){
+            case "photo":
+              break;
+            default : 
+            let input = formUpdate.querySelector(`[name=${name}]`);
+            if(input) input.value = data[name];
+          }
+          
+        }
+        $("#modal-update").modal('show');
+    });
+    
+  });
+ 
+/*
+ let tr = e.path.find(el => {
+        return (el.tagName.toUpperCase() === "TR");
+      })
+*/
 </script>
