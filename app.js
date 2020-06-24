@@ -17,7 +17,9 @@ var adminRouter = require("./routes/admin");
 var app = express();
 
 app.use(function(req,res, next){
-  if(req.method === "POST"){
+  let contentType = req.headers["content-type"];
+
+  if(req.method === "POST" && contentType.indexOf('multipart/form-data;') > -1){
   var form = formidable.IncomingForm({
     uploadDir: path.join(__dirname, "/public/images"),
     keepExtensions:true, 

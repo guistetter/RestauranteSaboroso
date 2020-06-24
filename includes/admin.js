@@ -73,7 +73,7 @@ module.exports = {
 
     menus.map((menu) => {
       if (menu.href === `/admin${req.url}`) menu.active = true;
-      console.log(req.url, menu.href);
+     // console.log(req.url, menu.href);
     });
 
     return menus;
