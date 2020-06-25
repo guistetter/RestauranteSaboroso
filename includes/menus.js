@@ -18,16 +18,42 @@ module.exports = {
   },
   save(fields, files){
     return new Promise((resolve, reject)=>{
+
       fields.photo = `images/${path.parse(files.photo.path).base}` //pegar só o nome do arquivo
-      connection.query(`
-        INSERT INTO tb_menus (title, description, price, photo)
-        values(?,?,?,?)
-      `,[
+     
+      //params padrao, comum ao insert e update, diferenca id e photo
+      let query, queryPhoto = "", params = [
         fields.title,
-        fields.description,
-        fields.price, 
-        fields.photo,
-      ], (err, results) => {
+        fields.description, 
+        fields.price 
+      ];
+      //precisa do name pra saber tem a foto mas tem conteudo?, sem o name nao funciona
+      if(files.photo.name){
+        queryPhoto = ",photo = ?";
+        params.push(fields.photo);
+      }
+      //se o id for maior que 0 é update ai criamos do zero
+      if(parseInt(fields.id) > 0){
+        params.push(fields.id);
+
+        query = `
+        UPDATE tb_menus
+        set title = ?,
+            description = ?,
+            price = ?
+            ${queryPhoto}
+            where id = ?
+        `;
+     } else { //se id nao for > 0 então é um novo cadastrao, nao é update
+       if(!files.photo.name){
+         reject("Envie a foto do prato.");
+       }
+      query = `
+      INSERT INTO tb_menus (title, description, price, photo)
+      values(?,?,?,?)
+      `;
+     }
+      connection.query(query, params, (err, results) => {
         if(err){
           reject(err)
         } else {
