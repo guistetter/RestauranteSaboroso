@@ -225,7 +225,19 @@
 
 <!-- Main Footer -->
 <%- include('include/footer') -%>
+
+<script src="/js/hcode-filereader.js">
+//plugin para ler e exibir imagem dentro de public/js
+</script>
+
 <script>
+  //plugin ler e exibir imagem preview da imagem antes de salvar
+  //usado no botao new e modal updtade
+  new HcodeFileReader("#modal-create [type=file]", "#modal-create img");
+  new HcodeFileReader("#modal-update [type=file]", "#modal-update img")
+
+  //pegando dados modal criar menu, popular os dados do item selecionado 
+  //nos fields do form no modal
   let formCreate = document.querySelector("#modal-create form")
   
   formCreate.addEventListener('submit', e =>{
@@ -257,6 +269,7 @@
         for (let name in data){
           switch(name){
             case "photo":
+              formUpdate.querySelector("img").src = "/"+data[name];
               break;
             default : 
             let input = formUpdate.querySelector(`[name=${name}]`);
