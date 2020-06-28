@@ -1,5 +1,6 @@
 let connection = require("./db");
-let path = require("path")
+let path = require("path");
+const { resolve } = require("path");
 module.exports = {
   getMenus() {
     return new Promise((resolve, reject) => {
@@ -54,6 +55,22 @@ module.exports = {
       `;
      }
       connection.query(query, params, (err, results) => {
+        if(err){
+          reject(err)
+        } else {
+          resolve(results)
+        }
+      })
+    })
+  },
+
+  delete(id){
+    return new Promise((resolve,reject) => {
+      connection.query(`
+      DELETE FROM tb_menus WHERE id = ?
+      `,[
+        id
+      ],(err, results)=>{
         if(err){
           reject(err)
         } else {

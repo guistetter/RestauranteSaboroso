@@ -278,8 +278,29 @@
   }).catch(err => {
     console.log(err);
   });
-
-  //convertendo em array
+  //pegando botoes delete
+  [...document.querySelectorAll(".btn-delete")].forEach(btn => {
+    btn.addEventListener("click", e=>{
+  
+      let tr = e.path.find(el => {
+        return (el.tagName.toUpperCase() === "TR");
+      });
+      let data = JSON.parse(tr.dataset.row);
+      if(confirm(`Deseja realmente excluir o menu ${data.title}?`)){
+        console.log("data id delete " + data.id);
+      fetch(`/admin/menus/${data.id}`,{
+        method: "DELETE"
+      })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json)
+        window.location.reload();
+      });
+      } 
+    
+    });
+  });
+  //convertendo em array pegando botoes update
   [...document.querySelectorAll(".btn-update")].forEach(btn => {
 
     btn.addEventListener("click", e => {
