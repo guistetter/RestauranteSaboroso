@@ -90,8 +90,6 @@
                 <button
                   type="button"
                   class="btn btn-xs btn-info btn-update"
-                  data-toggle="modal"
-                  data-target="#modal-update"
                 >
                   <i class="fa fa-pencil"></i> Editar</button
                 >&nbsp;<button
@@ -289,7 +287,9 @@
 <!-- Main Footer -->
 <%- include('include/footer') -%>
 
-<script src="/js/hcode-formsave.js"></script>
+
+<script src="/js/moment.min.js"></script><!--scripts na pasta public-->
+<script src="/js/hcode-formsave.js"></script><!--scripts na pasta public-->
 
 <script>
 
@@ -297,7 +297,7 @@ let formCreate = document.querySelector("#modal-create form")
 
   formCreate.save().then(json =>{
 
-    //window.location.reload();
+    window.location.reload();
 
   }).catch(err => {
     console.log(err)
@@ -311,5 +311,34 @@ let formCreate = document.querySelector("#modal-create form")
     console.log(err);
   });
 
+  //convertendo em array pegando botoes update
+  [...document.querySelectorAll(".btn-update")].forEach(btn => {
+
+    btn.addEventListener("click", e => {
+
+        let tr = e.path.find(el => {
+          return (el.tagName.toUpperCase() === "TR");
+        })
+
+        let data = JSON.parse(tr.dataset.row)
+        console.log(data);
+
+        for (let name in data){
+          let input = formUpdate.querySelector(`[name=${name}]`);
+          switch(name){
+            case "date":
+            if(input) input.value = moment(data[name]).format("YYYY-MM-DD");
+              console.log(data[name]);
+              console.log(moment(data[name]).format("YYYY-MM-DD"));
+            break;
+            default : 
+            if(input) input.value = data[name];
+          }
+  
+        }
+        $("#modal-update").modal('show');
+    });//fim btn.addEventListener
+    
+  });
   
 </script>
