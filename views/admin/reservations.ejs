@@ -293,14 +293,14 @@
 
 <script>
 
-let formCreate = document.querySelector("#modal-create form")
+  let formCreate = document.querySelector("#modal-create form")
 
   formCreate.save().then(json =>{
 
     window.location.reload();
 
   }).catch(err => {
-    console.log(err)
+      console.log(err)
   });
 
   let formUpdate = document.querySelector("#modal-update form");
@@ -338,7 +338,27 @@ let formCreate = document.querySelector("#modal-create form")
         }
         $("#modal-update").modal('show');
     });//fim btn.addEventListener
-    
+  });//fim update
+
+  [...document.querySelectorAll(".btn-delete")].forEach(btn => {
+    btn.addEventListener("click", e=>{
+  
+      let tr = e.path.find(el => {
+        return (el.tagName.toUpperCase() === "TR");
+      });
+      let data = JSON.parse(tr.dataset.row);
+      if(confirm(`Deseja realmente excluir a reserva de ${data.name}?`)){
+        console.log("data id delete " + data.id);
+      fetch(`/admin/reservations/${data.id}`,{
+        method: "DELETE"
+      })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json)
+        window.location.reload();
+      });
+      } 
+    });
   });
   
 </script>
