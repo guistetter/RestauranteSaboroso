@@ -4,6 +4,9 @@ var admin = require("./../includes/admin");
 var menus = require("./../includes/menus");
 var reservations = require("./../includes/reservations");
 
+var moment = require("moment");
+moment.locale("pt-BR");
+
 var router = express.Router();
 
 //controlando area restrita do site
@@ -103,7 +106,8 @@ router.get("/reservations", function (req, res, next) {
       "admin/reservations",
       admin.getParams(req, {
         date: {}, 
-        data
+        data,
+        moment
       })
     );
   });
