@@ -1,7 +1,9 @@
 var express = require("express");
 var users = require("./../includes/users");
 var admin = require("./../includes/admin");
-var menus = require("./../includes/menus")
+var menus = require("./../includes/menus");
+var reservations = require("./../includes/reservations");
+
 var router = express.Router();
 
 //controlando area restrita do site
@@ -102,6 +104,22 @@ router.get("/reservations", function (req, res, next) {
     })
   );
 });
+
+router.post("/reservations", function(req, res, next){
+  reservations.save(req.fields, req.files).then(results => {
+    res.send(results)
+  }).catch(err=>{
+    res.send(err)
+  })
+})
+
+router.delete("/reservations/:id", function(req,res,next){
+  reservations.delete(req.params.id).then(results =>{
+    res.send(results);
+  }).catch(err => {
+    res.send(err)
+  });
+})
 
 router.get("/users", function (req, res, next) {
   res.render("admin/users", admin.getParams(req));
