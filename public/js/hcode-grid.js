@@ -1,13 +1,23 @@
 class HcodeGrid {
   constructor(configs){
+
+    configs.listeners = Object.assign({
+      afterUpdateClick:(e)=>{
+        //console.log('afterUpdateClick');
+        $("#modal-update").modal('show');
+      },
+    },configs.listeners);
+
     this.options = Object.assign({}, {
       formCreate: "#modal-create form",
       formUpdate: "#modal-update form",
       btnUpdate: ".btn-update",
       btnDelete: ".btn-delete",
     },configs);
+
     this.initForms();
     this.initButtons();
+
   }
 
   initForms(){
@@ -28,15 +38,24 @@ class HcodeGrid {
     }).catch(err => {
       console.log(err);
     });
+  }//fim initForms
+
+  fireEvent(name, args){
+
+    if(typeof this.options.listeners[name] === 'function') 
+      this.options.listeners[name].apply(this, args)
   }
-  
+
   initButtons(){
     
     //convertendo em array pegando botoes update
     [...document.querySelectorAll(this.options.btnUpdate)].forEach(btn => {
   
       btn.addEventListener("click", e => {
-  
+
+        //this.options.listeners.beforeUpdateClick(e);
+        this.fireEvent("beforeUpdateClick",[e])
+
           let tr = e.path.find(el => {
             return (el.tagName.toUpperCase() === "TR");
           })
@@ -57,8 +76,12 @@ class HcodeGrid {
             }
     
           }
-          $("#modal-update").modal('show');
+
+          this.fireEvent("afterUpdateClick",[e])
+          //this.options.listeners.afterUpdateClick(e);
+
       });//fim btn.addEventListener
+
     });//fim update
   
     [...document.querySelectorAll(this.options.btnDelete)].forEach(btn => {
