@@ -292,10 +292,26 @@
 <script src="/js/hcode-formsave.js"></script><!--scripts na pasta public-->
 <script src="/js/hcode-grid.js"></script>
 <script>
-  
+
   new HcodeGrid({
     deleteUrl: "/admin/reservations/${data.id}",
     deleteMsg:  "Deseja realmente excluir a reserva de ${data.name}?",
+    onUpdateLoad: (form, name, data) => {
+      
+      let input = form.querySelector(`[name=${name}]`);
+
+      switch(name){
+
+        case "date":
+        if(input) input.value = moment(data[name]).format("YYYY-MM-DD");
+          console.log(data[name]);
+          console.log(moment(data[name]).format("YYYY-MM-DD"));
+        break;
+
+        default : 
+        if(input) input.value = data[name];
+      }
+    }
   });
  
 </script>

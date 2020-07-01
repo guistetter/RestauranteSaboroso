@@ -234,12 +234,33 @@
 //prototype para enviar formulario
 </script>
 
+<script src="/js/hcode-grid.js"></script>
+
 <script>
+
   //plugin ler e exibir imagem preview da imagem antes de salvar
   //usado no botao new e modal updtade
   new HcodeFileReader("#modal-create [type=file]", "#modal-create img");
-  new HcodeFileReader("#modal-update [type=file]", "#modal-update img")
+  new HcodeFileReader("#modal-update [type=file]", "#modal-update img");
 
+  new HcodeGrid({
+    deleteUrl: "/admin/menus/${data.id}",
+    deleteMsg:  "Deseja realmente excluir o menu ${data.tile}?",
+    onUpdateLoad: (form, name, data) => {
+
+      let input = form.querySelector(`[name=${name}]`);
+
+      switch(name){
+        case "photo":
+          form.querySelector("img").src = "/" + data[name];
+        break;
+        default : 
+        if(input) input.value = data[name];
+      }
+    }
+  });
+
+  /*
   //pegando dados modal criar menu, popular os dados do item selecionado 
   //nos fields do form no modal
   let formCreate = document.querySelector("#modal-create form")
@@ -335,4 +356,6 @@
         return (el.tagName.toUpperCase() === "TR");
       })
 */
+
+
 </script>
