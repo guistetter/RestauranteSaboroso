@@ -40,16 +40,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1.</td>
-              <td>Hcode</td>
-              <td>contato@hcode.com.br</td>
+            <% data.forEach(function(row) { %>
+            <tr data-row="<%= JSON.stringify(row)%>"">
+              <td><%= row.id %></td>
+              <td><%= row.name %></td>
+              <td><%= row.email %></td>
               <td>
                 <button
                   type="button"
-                  class="btn btn-xs btn-info"
-                  data-toggle="modal"
-                  data-target="#modal-update"
+                  class="btn btn-xs btn-info btn-update" 
                 >
                   <i class="fa fa-pencil"></i> Editar</button
                 >&nbsp;
@@ -66,6 +65,7 @@
                 </button>
               </td>
             </tr>
+            <% }); %>
           </tbody>
         </table>
       </div>
@@ -245,3 +245,12 @@
 
 <!-- Main Footer -->
 <%- include('include/footer') -%>
+<script src="/js/hcode-formsave.js"></script>
+<script src="/js/hcode-grid.js"></script>
+
+<script>
+  new HcodeGrid({
+    deleteUrl: "/admin/users/${data.id}",
+    deleteMsg: "Deseja realmente excluir o usuario: ${data.name}?"
+  });
+</script>

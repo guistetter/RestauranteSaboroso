@@ -1,4 +1,4 @@
-var conn = require("./db");
+var connection = require("./db");
 
 module.exports = {
   render(req, res, error) {
@@ -11,7 +11,7 @@ module.exports = {
 
   login(email, password) {
     return new Promise((resolve, reject) => {
-      conn.query(
+      connection.query(
         `
         select * from tb_users where email = ?
         `,
@@ -41,7 +41,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       connection.query(
         `
-        SELECT * FROM tb_users ORDER BY title
+        SELECT * FROM tb_users ORDER BY name
       `,
         (err, results) => {
           if (err) {
@@ -60,13 +60,11 @@ module.exports = {
       ];
       //se o id for maior que 0 é update ai criamos do zero
       if(parseInt(fields.id) > 0){
-
         params.push(fields.id);
-
         query = `
         UPDATE tb_users
         set name = ?,
-            email = ?,
+            email = ?
             where id = ?
         `;
 
