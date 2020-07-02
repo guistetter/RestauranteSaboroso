@@ -54,9 +54,7 @@
                 >&nbsp;
                 <button
                   type="button"
-                  class="btn btn-xs btn-warning btn-update"
-                  data-toggle="modal"
-                  data-target="#modal-update-password"
+                  class="btn btn-xs btn-warning"
                 >
                   <i class="fa fa-lock"></i> Alterar Senha</button
                 >&nbsp;
@@ -79,7 +77,7 @@
 <div class="modal fade" id="modal-update-password">
   <div class="modal-dialog">
     <div class="modal-content" style="border-top: 3px solid #f39c12;">
-      <form method="post">
+      <form method="post" action="/admin/users/password-change">
         <input type="hidden" name="id" />
         <div class="modal-header">
           <button
@@ -251,6 +249,21 @@
 <script>
   new HcodeGrid({
     deleteUrl: "/admin/users/${data.id}",
-    deleteMsg: "Deseja realmente excluir o usuario: ${data.name}?"
+    deleteMsg: "Deseja realmente excluir o usuario: ${data.name}?",
+    listeners:{
+      buttonClick:(btn, data, e) =>{
+        document.querySelector("#modal-update-password form [name=id").value = data.id;
+        console.log("buttonClick",btn, data, e);
+        $("#modal-update-password").modal("show");
+      }
+    }
   });
+  document.querySelector("#modal-update-password form").save({
+    success:() =>{
+      window.location.reload();
+    },
+    failure: err =>{
+      alert(err);
+    }
+  })
 </script>

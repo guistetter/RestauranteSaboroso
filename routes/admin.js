@@ -131,7 +131,6 @@ router.delete("/reservations/:id", function(req,res,next){
 })
 
 router.get("/users", function (req, res, next) {
-
   users.getUsers().then(data => {
     res.render("admin/users", admin.getParams(req, {
       data
@@ -148,6 +147,13 @@ router.post("/users", function (req, res, next) {
   });
 });
 
+router.post("/users/password-change", function(req, res, next){
+  users.changePassword(req).then(results => {
+    res.send(results);
+  }).catch(err =>{
+    res.send({error: err});
+  });
+});
 
 router.delete("/users/:id", function (req, res, next) {
 

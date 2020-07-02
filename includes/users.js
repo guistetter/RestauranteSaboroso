@@ -100,5 +100,30 @@ module.exports = {
         }
       })
     })
+  },
+
+  changePassword(req){
+    return  new Promise((resolve, reject) => {
+      if(!req.fields.password){
+        reject("Preencha a senha.");
+      } else if (req.fields.password !== req.fields.passwordConfirm){
+        reject("Confirme a senha correta.");
+      } else {
+        connection.query(`
+        UPDATE tb_users
+        Set password = ?
+        WHERE id =?
+        `,[
+          req.fields.password,
+          req.fields.id
+        ],(err, results) =>{
+          if(err){
+            reject(err.message)
+          } else {
+            resolve(results);
+          }
+        });
+      }
+    });
   }
 };
