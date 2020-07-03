@@ -45,7 +45,7 @@
               </button>
             </td>
           </tr>
-          <% })%>
+          <% });%>
         </tbody>
       </table>
     </div>
@@ -57,11 +57,11 @@
 <!-- /.content-wrapper -->
 
 <%- include("include/footer") -%>
+
 <script src="/js/hcode-formsave.js"></script>
 <script src="/js/hcode-grid.js"></script>
 
 <script>
-
   new HcodeGrid({
     deleteUrl: "/admin/emails/${data.id}",
     deleteMsg: "Você tem certeza que quer excluir o e-mail ${data.email}?"
