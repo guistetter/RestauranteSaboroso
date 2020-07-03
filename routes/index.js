@@ -4,8 +4,10 @@ var express = require("express");
 var router = express.Router();
 var reservations = require("./../includes/reservations");
 var contacts = require("./../includes/contacts");
+
 /* GET home page. */
 router.get("/", function (req, res, next) {
+  
   menus.getMenus().then((results) => {
     res.render("index", {
       title: "Restaurante Saboroso!",
