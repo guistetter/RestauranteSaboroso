@@ -2,6 +2,7 @@ var express = require("express");
 var users = require("./../includes/users");
 var admin = require("./../includes/admin");
 var menus = require("./../includes/menus");
+var contacts = require("./../includes/contacts");
 var reservations = require("./../includes/reservations");
 
 var moment = require("moment");
@@ -66,8 +67,24 @@ router.get("/login", function (req, res, next) {
 });
 
 router.get("/contacts", function (req, res, next) {
-  res.render("admin/contacts", admin.getParams(req));
+  contacts.getContacts().then( data => {
+    res.render("admin/contacts", admin.getParams(req,{
+      data
+    }));
+  });
 });
+
+//rota post do contacts vem da area publica
+router.delete("/contacts/:id", function (req, res, next) {
+
+  contacts.delete(req.params.id).then(results => {
+
+    res.send(results);
+  }).catch(err => {
+    res.send(err)
+  });
+});
+
 
 router.get("/emails", function (req, res, next) {
   res.render("admin/emails", admin.getParams(req));
