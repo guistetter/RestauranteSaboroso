@@ -30,7 +30,8 @@ class Pagination {
           this.data = results[0];
           this.total = results[1][0].FOUND_ROWS;
           this.totalPages = Math.ceil(this.total / this.itensPerPage);
-
+          console.log(this.total);
+          console.log(this.totalPages);
           resolve(this.data);
         }
       });
