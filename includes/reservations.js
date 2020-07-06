@@ -69,6 +69,8 @@ module.exports = {
   
   getReservations(page,dtstart,dtend) {
 
+    return new Promise((resolve, reject) => {
+
     if(!page) page = 1;
 
     let params = [];
@@ -84,7 +86,13 @@ module.exports = {
       `, params
     );
 
-    return pag.getPage(page);
+    pag.getPage(page).then(data =>{
+      resolve({
+        data,
+        links: pag.getNavigation()
+      })
+    });
+    });
   },
 
   delete(id){

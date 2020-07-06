@@ -51,6 +51,37 @@ class Pagination {
     return this.totalPages;
   }
 
+  getNavigation(params){
+    let limitPagesNav = 5;
+    let links = [];
+    let nrstart = 0;
+    let nrend = 0;
+
+    if(this.getTotalPages() < limitPagesNav){
+      limitPagesNave = this.getTotalPages();
+    }
+    //checar se é uma das primeiras paginas
+    if((this.getCurrentPage() - parseInt(limitPagesNav / 2)) < 1){
+      nrstart = 1;
+      nrend = limitPagesNav;
+    } else if((this.getCurrentPage() + parseInt(limitPageNav/1)) > this.getTotalPages()){
+      nrstart = this.getTotalPages() - limitPagesNav;
+      nrend = this.getTotalPages();
+    } else {
+      nrstart = this.getCurrentPage() - parseInt(limitPageNave / 2);
+      nrend = this.getCurrentPage() + parseInt(limitPageNav/2);
+    }
+
+    for(let x = nrstart; x <= nrend; x++){
+      links.push({
+        text: x,
+        href: `?page=${x}`
+      })
+    }
+
+    return links;
+  }
+
 }
 
 

@@ -134,13 +134,15 @@ router.delete("/menus/:id", function(req,res,next){
 })
 
 router.get("/reservations", function (req, res, next) {
+ 
   let start = (req.query.start) ? req.query.start : moment().subtract(1,"year").format("YYYY-MM-DD");
   let end = (req.query.end) ? req.query.end: moment().format("YYYY-MM-DD");
+  
   reservations.getReservations(
     req.query.page,
     req.query.start,
     req.query.end
-    ).then(data =>{
+    ).then(pag =>{
 
     res.render(
       "admin/reservations",
@@ -149,8 +151,9 @@ router.get("/reservations", function (req, res, next) {
           start,
           end
         }, 
-        data,
-        moment
+        data: pag.data,
+        moment,
+        links: pag.links
       })
     );
   });
