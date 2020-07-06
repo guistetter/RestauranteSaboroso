@@ -67,14 +67,21 @@ module.exports = {
     });
   },
   
-  getReservations(page) {
+  getReservations(page,dtstart,dtend) {
 
     if(!page) page = 1;
-    
+
+    let params = [];
+
+    if(dtstart && dtend) params.push(dtstart, dtend);
+
     let pag = new Pagination(
       `
-      SELECT SQL_CALC_FOUND_ROWS * FROM tb_reservations ORDER BY name LIMIT ?,?
-      `
+      SELECT SQL_CALC_FOUND_ROWS * 
+      FROM tb_reservations
+      ${(dtstart && dtend) ?'WHERE date BETWEEN ? AND ?' : ''}
+      ORDER BY name LIMIT ?,?
+      `, params
     );
 
     return pag.getPage(page);
