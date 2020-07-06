@@ -30,6 +30,7 @@ class Pagination {
           this.data = results[0];
           this.total = results[1][0].FOUND_ROWS;
           this.totalPages = Math.ceil(this.total / this.itensPerPage);
+          this.currentPage++;
           console.log(this.total);
           console.log(this.totalPages);
           resolve(this.data);
@@ -58,28 +59,42 @@ class Pagination {
     let nrend = 0;
 
     if(this.getTotalPages() < limitPagesNav){
-      limitPagesNave = this.getTotalPages();
+      limitPagesNav = this.getTotalPages();
     }
     //checar se é uma das primeiras paginas
     if((this.getCurrentPage() - parseInt(limitPagesNav / 2)) < 1){
       nrstart = 1;
       nrend = limitPagesNav;
-    } else if((this.getCurrentPage() + parseInt(limitPageNav/1)) > this.getTotalPages()){
+    } 
+    //se estamos chegando nas ultimas paginas
+    else if((this.getCurrentPage() + parseInt(limitPagesNav/2)) > this.getTotalPages()){
       nrstart = this.getTotalPages() - limitPagesNav;
       nrend = this.getTotalPages();
     } else {
-      nrstart = this.getCurrentPage() - parseInt(limitPageNave / 2);
-      nrend = this.getCurrentPage() + parseInt(limitPageNav/2);
+      nrstart = this.getCurrentPage() - parseInt(limitPagesNav / 2);
+      nrend = this.getCurrentPage() + parseInt(limitPagesNav / 2);
     }
 
     for(let x = nrstart; x <= nrend; x++){
       links.push({
         text: x,
-        href: `?page=${x}`
-      })
+        href: '?' + this.getQueryString(Object.assign({}, params, {page: x})),
+        active: (x === this.getCurrentPage())
+      });
     }
 
     return links;
+  }
+
+  getQueryString(params){
+
+    let queryString = [];
+
+    for (let name in params ){
+      queryString.push(`${name}=${params[name]}`);
+    }
+
+    return queryString.join("&"); 
   }
 
 }

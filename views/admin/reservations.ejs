@@ -107,8 +107,8 @@
       <!-- /.box-body -->
       <div class="box-footer clearfix">
         <ul class="pagination pagination-sm no-margin pull-right">
-          <% links.forEach(link => {%>
-          <li class="active"><a href="<%= link.href %>"><%= link.text %></a></li>
+          <% links.forEach(link => { %>
+          <li <% if (link.active){ %> class="active" <% }%>> <a href="<%= link.href %>"><%= link.text %></a></li>
           <% }); %>
         </ul>
       </div>
