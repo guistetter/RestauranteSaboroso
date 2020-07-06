@@ -1,4 +1,6 @@
 var connection = require("./db");
+var Pagination = require("./Pagination");
+
 
 module.exports = {
 
@@ -64,21 +66,20 @@ module.exports = {
       );
     });
   },
-  getReservations() {
-    return new Promise((resolve, reject) => {
-      connection.query(
-        `
-        SELECT * FROM tb_reservations ORDER BY date DESC
-      `,
-        (err, results) => {
-          if (err) {
-            reject(err);
-          }
-          resolve(results);
-        }
-      );
-    });
+  
+  getReservations(page) {
+
+    if(!page) page = 1;
+    
+    let pag = new Pagination(
+      `
+      SELECT SQL_CALC_FOUND_ROWS * FROM tb_reservations ORDER BY name LIMIT ?,?
+      `
+    );
+
+    return pag.getPage(page);
   },
+
   delete(id){
     return new Promise((resolve,reject) => {
       connection.query(`

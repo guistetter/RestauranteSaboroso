@@ -6,6 +6,7 @@ var contacts = require("./../includes/contacts");
 var emails = require("./../includes/emails");
 var reservations = require("./../includes/reservations");
 
+
 var moment = require("moment");
 moment.locale("pt-BR");
 
@@ -93,6 +94,7 @@ router.get("/emails", function (req, res, next) {
       data
     }));
   });
+
 });
 
 router.delete("/emails/:id", function(req,res,next){
@@ -102,6 +104,7 @@ router.delete("/emails/:id", function(req,res,next){
   }).catch(err => {
     res.send(err);
   });
+
 });
 
 router.get("/menus", function (req, res, next) {
@@ -131,6 +134,7 @@ router.delete("/menus/:id", function(req,res,next){
 })
 
 router.get("/reservations", function (req, res, next) {
+  
   reservations.getReservations().then(data =>{
 
     res.render(
