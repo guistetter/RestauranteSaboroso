@@ -132,15 +132,21 @@ module.exports = {
         req.query.start,
         req.query.end
       ],(err,results)=>{
+
         if(err){
           reject 
         } else {
+
           let months = [];
           let values = [];
+
           results.forEach(row => {
-            months.push(moment(row.date.format("MMM YYYY")));
+
+            months.push(moment(row.date).format('MMM YYYY'));
             values.push(row.total);
+
           });
+
           resolve({
             months,
             values
@@ -150,4 +156,4 @@ module.exports = {
 
     });
   }//fim chart
-};
+}

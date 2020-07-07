@@ -320,17 +320,7 @@
   let grafico = new Chart(document.querySelector("#chart").getContext("2d"),{
     //type:"doughnut",
     type:"line",
-    data:{
-      labels:['Jan', "Fev","Marc","Abr", "Mai", "Jun"],
-      datasets:[{
-        data:[3,5,6,2,5,2],
-        label: "Reservas",
-        backgroundColor: "rgba(54,162,235,0.5)",
-        borderColor: "rgba(50,130,200,0.4)",
-        fill:true, 
-        pointBackgroundColor:"#FFF"
-      }]
-    },
+    data:{},
     options:{
       tooltips:{
         mode: "index",
@@ -354,5 +344,22 @@
       }
     }
   });
+  
+ fetch(`/admin/reservations/chart${window.location.search}`)
+ .then(response => response.json())
+ .then(json => {
+   grafico.data = {
+     labels: json.months, 
+      datasets:[{
+        data: json.values,
+        label: "Reservas",
+        backgroundColor: "rgba(54,162,235,0.5)",
+        borderColor: "rgba(50,130,200,0.4)",
+        fill:true, 
+        pointBackgroundColor:"#FFF"
+      }]
+   }
+   grafico.update();
+  })
  
 </script>
