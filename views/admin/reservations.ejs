@@ -318,6 +318,7 @@
   });
 
   let grafico = new Chart(document.querySelector("#chart").getContext("2d"),{
+    //type:"doughnut",
     type:"line",
     data:{
       labels:['Jan', "Fev","Marc","Abr", "Mai", "Jun"],
@@ -329,6 +330,28 @@
         fill:true, 
         pointBackgroundColor:"#FFF"
       }]
+    },
+    options:{
+      tooltips:{
+        mode: "index",
+        intersect: false
+      },
+      scales:{
+        xAxes:[{
+          display:true, 
+          scaleLabel:{
+            display: true, 
+            labelString: "Mês"
+          }
+        }],
+        yAxes:[{
+          display:true, 
+          scaleLabel:{
+            display: true, 
+            labelString: "Reservas"
+          }
+        }]
+      }
     }
   });
  
