@@ -117,7 +117,8 @@
   }
 
   let socket = io();
-  socket.on("reservations update", function(data){
+  socket.on("dashboard update", function(data){
+    refreshDashboard();
     console.log("recebi o evento", data)
   })
 </script>

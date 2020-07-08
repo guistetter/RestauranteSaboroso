@@ -15,8 +15,17 @@ var app = express();
 var http = http.Server(app);
 var io = socket(http);
 
-var indexRouter = require("./routes/index");
-var adminRouter = require("./routes/admin");
+io.on("connection", function(socket){
+
+  console.log("Novo usuário conectado");
+
+  io.emit("reservations update", {
+    date: new Date()
+  });
+});
+
+var indexRouter = require("./routes/index")(io);
+var adminRouter = require("./routes/admin")(io);
 
 app.use(
   session({
@@ -51,7 +60,7 @@ app.use("/admin", adminRouter);
 
 app.use(function(req,res, next){
   let contentType = req.headers["content-type"];
-
+  req.body = {};
   if(req.method === "POST" && contentType.indexOf('multipart/form-data;') > -1){
   var form = formidable.IncomingForm({
     uploadDir: path.join(__dirname, "/public/images"),
@@ -82,15 +91,6 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
-});
-
-io.on("connection", function(socket){
-
-  console.log("Novo usuário conectado");
-
-  io.emit("reservations update", {
-    date: new Date()
-  });
 });
 
 http.listen(3000, function(){
