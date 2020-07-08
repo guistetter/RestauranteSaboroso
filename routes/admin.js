@@ -46,6 +46,12 @@ router.get("/", function (req, res, next) {
 
 });
 
+router.get("/dashboard", function(req, res, next){
+  reservations.dashboard().then(data => {
+    res.send(data);
+  })
+});
+
 router.post("/login", function (req, res, next) {
   if (!req.body.email) {
     users.render(req, res, "Preencha o campo e-mail");
